@@ -1,1 +1,1 @@
-# The project name is e-plantShopping
+# The repository name is e-plantShopping
