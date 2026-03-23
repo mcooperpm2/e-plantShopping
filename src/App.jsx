@@ -1,49 +1,48 @@
-
 import React, { useState } from 'react';
-import ProductList from './ProductList';
 import './App.css';
 import AboutUs from './AboutUs';
+import ProductList from './ProductList';
+import CartItems from './CartItem';
 
 function App() {
-  
-  const [showProductList, setShowProductList] = useState(false);
+  const [currentPage, setCurrentPage] = useState('landing');
 
-  const handleGetStartedClick = () => {
-    setShowProductList(true);
+  const handleGetStarted = () => {
+    setCurrentPage('products');
   };
 
-  const handleHomeClick = () => {
-    setShowProductList(false);
+  const handleGoHome = () => {
+    setCurrentPage('landing');
+  };
+
+  const handleGoToCart = () => {
+    setCurrentPage('cart');
+  };
+
+  const handleContinueShopping = () => {
+    setCurrentPage('products');
   };
 
   return (
-    <div className="app-container">
-      <div className={`landing-page ${showProductList ? 'fade-out' : ''}`}>
-        <div className="background-image"></div>
-        <div className="content">
-         <div className="landing_content">
-         <h1>Welcome To Paradise Nursery</h1>
-          <div className="divider"></div>
-          <p>Where Green Meets Serenity</p>
-         
-          <button className="get-started-button" onClick={handleGetStartedClick}>
-            Get Started
-          </button>
-         </div>
-          <div className="aboutus_container">
-          <AboutUs/>
-          </div>
-          </div>
+    <div className="app">
+      {currentPage === 'landing' && (
+        <AboutUs onGetStarted={handleGetStarted} />
+      )}
 
-      </div>
-      <div className={`product-list-container ${showProductList ? 'visible' : ''}`}>
-        <ProductList onHomeClick={handleHomeClick}/>
-      </div>
+      {currentPage === 'products' && (
+        <ProductList onGoHome={handleGoHome} onGoToCart={handleGoToCart} />
+      )}
+
+      {currentPage === 'cart' && (
+        <CartItems
+          onContinueShopping={handleContinueShopping}
+          onGoHome={handleGoHome}
+        />
+      )}
     </div>
   );
 }
 
 export default App;
-
 
 
